@@ -25,7 +25,7 @@ router.post('/sign-up', userMiddleware.validateRegister, (req, res, next) => {
             });
           } else {
             db.query(
-              'INSERT INTO users (username, password, registered) VALUES (?, ?, now());',
+              'INSERT INTO users (username, password, registered, admin) VALUES (?, ?, now(), FALSE);',
               [req.body.username, hash],
               (err, result) => {
                 if (err) {
