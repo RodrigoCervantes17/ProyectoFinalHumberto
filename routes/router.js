@@ -146,7 +146,106 @@ router.get('/secret-route', userMiddleware.isLoggedIn, (req, res, next) => {
   res.send('This is secret content!');
 });
 
+
+
+
+//http://localhost:3000/api/users
+router.get('/users', userMiddleware.isLoggedIn, (req, res, next) => { 
+  
+  db.query(
+    "SELECT * FROM users;",
+    (err, rows, fields) =>
+    {
+        if (err)
+        {
+            res.json(err)
+        }
+        else
+        {
+            res.json(rows)
+        }
+    }
+);
+
+});
+// http://localhost:3000/api/productos
+router.get('/productos', userMiddleware.isLoggedIn, (req, res, next) => { 
+  
+  db.query(
+    "SELECT * FROM productos;",
+    (err, rows, fields) =>
+    {
+        if (err)
+        {
+            res.json(err)
+        }
+        else
+        {
+            res.json(rows)
+        }
+    }
+);
+
+});
+
+// http://localhost:3000/api/agregarProductos
+router.post('/agregarProductos', userMiddleware.isLoggedIn, (req,res,next) => {
+  db.query(
+    "INSERT INTO productos (nombre, cantidad, costo) VALUES (?, ?, ?);",
+    [req.body.nombre, req.body.cantidad, req.body.costo],
+    (err, rows, fields) =>
+    {
+        if (err)
+        {
+            res.json(err)
+        }
+        else
+        {
+            res.json(rows)
+        }
+    }
+);
+},
+)
+
+// http://localhost:3000/api/buscarProductos
+router.post('/buscarProductos', userMiddleware.isLoggedIn, (req, res) => {
+  db.query(
+      'SELECT * FROM productos where nombre like "?";',
+      [`%${req.body.nombre}%`],
+      (err, rows, fields) => {
+          if (err)
+              res.json(err)
+          else
+              res.json(rows)
+      }
+  )
+}),
+
+
+//modificarProductos
+router.post('/modificarProductos', userMiddleware.isLoggedIn, (req,res,next) => {
+  {
+    db.query(
+        `UPDATE productos SET ${req.body.nombre} = ? WHERE id = ?;`,
+        [req.body.valor, req.body.id],
+        (err, rows, fields) =>
+        {
+            if (err)
+            {
+                res.json(err)
+            }
+            else
+            {
+                res.json(rows)
+            }
+        }
+    )
+}}
+)
+
+
+
+
+
 module.exports = router;
-
-
-//http://localhost:3000/api/clientes
