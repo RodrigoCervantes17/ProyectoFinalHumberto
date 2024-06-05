@@ -2,7 +2,13 @@ REGISTRAR USUARIO
 curl -d "{\"username\":\"Humberto\", \"password\":\"profe92\", \"password_repeat\":\"profe92\"}" -H "Content-Type: application/json" -X POST http://localhost:3000/api/sign-up
 LOGIN USUARIO
 curl -d "{\"username\":\"Roberto\", \"password\":\"Roberto52\"}" -H "Content-Type: application/json" -X POST http://localhost:3000/api/login
+REGISTRAR ADMIN
+curl -d "{\"username\":\"Humberto\", \"password\":\"profe92\", \"password_repeat\":\"profe92\"}" -H "Content-Type: application/json" -X POST http://localhost:3000/api/sign-upAdmin
+
 AGREGAR PRODUCTOS
 
 RUTA SECRETA (PRUEBA):
-curl -H "Content-Type: aplication/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlJvYmVydG8iLCJ1c2VySWQiOjMsImlhdCI6MTcxNzU4OTE3MSwiZXhwIjoxNzE4MTkzOTcxfQ.GjSaNvXMJ55548tvnlZuz4WfbfNlqLDyRrLl41brpdA" http://localhost:3000/api/secret-route
+curl -H "Content-Type: aplication/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikh1bWJlcnRvIiwidXNlcklkIjo0LCJpYXQiOjE3MTc1OTE4ODgsImV4cCI6MTcxODE5NjY4OH0.moUzdTXk2Jc7YJaSM8khZ3N2vv-9GAsGLh2nkhzzeJ0" http://localhost:3000/api/secret-route
+
+
+TOKEN DE USUARIO HUMBERTO (ADMIN): eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ikh1bWJlcnRvIiwidXNlcklkIjo0LCJpYXQiOjE3MTc1OTE4ODgsImV4cCI6MTcxODE5NjY4OH0.moUzdTXk2Jc7YJaSM8khZ3N2vv-9GAsGLh2nkhzzeJ0

@@ -45,6 +45,46 @@ router.post('/sign-up', userMiddleware.validateRegister, (req, res, next) => {
   );
 });
 
+// http://localhost:3000/api/sign-up/admin
+router.post('/sign-upAdmin', userMiddleware.validateRegister, (req, res, next) => {
+  db.query(
+    'SELECT id FROM users WHERE LOWER(username) = LOWER(?)',
+    [req.body.username],
+    (err, result) => {
+      if (result && result.length) {
+        // error
+        return res.status(409).send({
+          message: 'This username is already in use!',
+        });
+      } else {
+        // username not in use
+        bcrypt.hash(req.body.password, 10, (err, hash) => {
+          if (err) {
+            return res.status(500).send({
+              message: err,
+            });
+          } else {
+            db.query(
+              'INSERT INTO users (username, password, registered, admin) VALUES (?, ?, now(), TRUE);', //ESPACIO ADMIN EN VERDADERO
+              [req.body.username, hash],
+              (err, result) => {
+                if (err) {
+                  return res.status(400).send({
+                    message: err,
+                  });
+                }
+                return res.status(201).send({
+                  message: 'Registered!',
+                });
+              }
+            );
+          }
+        });
+      }
+    }
+  );
+});
+
 // http://localhost:3000/api/login
 router.post('/login', (req, res, next) => {
   db.query(
@@ -100,9 +140,13 @@ router.post('/login', (req, res, next) => {
 });
 
 // http://localhost:3000/api/secret-route
-router.get('/secret-route', userMiddleware.isLoggedIn, (req, res, next) => {
+// ACABO DE PONER ADMIN AQUI EN PRUEBA
+router.get('/secret-route', userMiddleware.isLoggedIn, (req, res, next) => { 
   console.log(req.userData);
   res.send('This is secret content!');
 });
 
 module.exports = router;
+
+
+//http://localhost:3000/api/clientes
